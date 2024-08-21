@@ -21,8 +21,8 @@ run_borg "${STACKS_DEFINITIONS_ROOT}/definitions" "${ROOT_BACKUP_PATH}/stacks_de
 run_borg "/mnt/media/mail_archives" "${ROOT_BACKUP_PATH}/mail_archives"
 run_borg "${ROOT_SYNCTHING_PATH}/Obsidian" "${ROOT_BACKUP_PATH}/obsidian"
 run_borg "${ROOT_SYNCTHING_PATH}/Personal" "${ROOT_BACKUP_PATH}/personal"
-run_borg "${STACKS_DATA_PATH}/baikal" "${ROOT_BACKUP_PATH}/baikal"
 run_borg "${STACKS_DATA_PATH}/offlineimap" "${ROOT_BACKUP_PATH}/mail_current"
+run_borg "${STACKS_DATA_PATH}/baikal" "${ROOT_BACKUP_PATH}/baikal"
 
 # Custom runs
 MINIFLUX_BACKUP_PATH="/mnt/media/backups/miniflux"
@@ -30,6 +30,9 @@ borg create --content-from-command "$MINIFLUX_BACKUP_PATH::{now}" -- docker exec
 borg prune -s --keep-daily 3 --keep-weekly=4 "$MINIFLUX_BACKUP_PATH"
 borg compact "$MINIFLUX_BACKUP_PATH"
 
+IMMICH_SOURCE_PATH="${STACKS_DATA_PATH}/immich"
+IMMICH_BACKUP_PATH="${ROOT_BACKUP_PATH}/immich"
+docker exec -t immich_postgres pg_dumpall --clean --if-exists --username=postgres > "${IMMICH_SOURCE_PATH}/database-backup/immich-database.sql"
 borg create -s "$IMMICH_BACKUP_PATH::{now}" "$IMMICH_SOURCE_PATH" --exclude "${IMMICH_SOURCE_PATH}/thumbs/" --exclude "${IMMICH_SOURCE_PATH}/encoded-video/"
 borg prune -s --keep-daily 3 --keep-weekly=4 "$IMMICH_BACKUP_PATH"
 borg compact "$IMMICH_BACKUP_PATH"
