@@ -19,10 +19,10 @@ run_borg "${HOME_PATH}/.config" "${ROOT_BACKUP_PATH}/home_config"
 run_borg "${STACKS_DEFINITIONS_ROOT}/config" "${ROOT_BACKUP_PATH}/stacks_config"
 run_borg "${STACKS_DEFINITIONS_ROOT}/definitions" "${ROOT_BACKUP_PATH}/stacks_definitions"
 run_borg "/mnt/media/mail_archives" "${ROOT_BACKUP_PATH}/mail_archives"
-run_borg "${STACKS_DATA_PATH}/offlineimap" "${ROOT_BACKUP_PATH}/mail_current"
 run_borg "${ROOT_SYNCTHING_PATH}/Obsidian" "${ROOT_BACKUP_PATH}/obsidian"
 run_borg "${ROOT_SYNCTHING_PATH}/Personal" "${ROOT_BACKUP_PATH}/personal"
 run_borg "${STACKS_DATA_PATH}/baikal" "${ROOT_BACKUP_PATH}/baikal"
+run_borg "${STACKS_DATA_PATH}/offlineimap" "${ROOT_BACKUP_PATH}/mail_current"
 
 # Custom runs
 MINIFLUX_BACKUP_PATH="/mnt/media/backups/miniflux"
